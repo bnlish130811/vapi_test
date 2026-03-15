@@ -3,52 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI English Speaking Test</title>
+    <title>AI Speaking Assessment</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f8fafc;
-            font-family: 'Arial', sans-serif;
-        }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 450px;
-        }
-        h1 {
-            color: #1e293b;
-            margin-bottom: 1rem;
-        }
-        p {
-            color: #64748b;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        #start-speaking-btn {
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            padding: 18px 36px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        #start-speaking-btn:hover {
-            background-color: #1d4ed8;
-            transform: translateY(-2px);
-        }
-        #start-speaking-btn:active {
-            transform: translateY(0);
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f8fafc; font-family: sans-serif; }
+        .container { text-align: center; background: white; padding: 3rem; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 400px; }
+        h1 { color: #1e293b; margin-bottom: 1rem; }
+        p { color: #64748b; margin-bottom: 2rem; }
+        #start-btn { 
+            background-color: #2563eb; color: white; border: none; padding: 18px 36px; 
+            font-size: 1.2rem; font-weight: 600; border-radius: 50px; cursor: pointer; width: 100%;
         }
     </style>
 </head>
@@ -56,12 +19,8 @@
 
     <div class="container">
         <h1>Speaking Assessment</h1>
-        <p>
-            Click the button below to start your interview. <br> 
-            <b>Please ensure your microphone is connected.</b>
-        </p>
-        
-        <button id="start-speaking-btn">Start Speaking Now</button>
+        <p>Click the button below to start your interview. <br><b>Microphone access is required.</b></p>
+        <button id="start-btn">Start Speaking Now</button>
     </div>
 
     <script 
@@ -73,15 +32,21 @@
     </script>
 
     <script>
-        // Logic to link the custom button to the Retell Widget
-        const startBtn = document.getElementById('start-speaking-btn');
-        
+        const startBtn = document.getElementById('start-btn');
+
         startBtn.addEventListener('click', () => {
-            // This function opens the Retell AI voice interface
+            // Retell 위젯이 로드되었는지 확인 후 대화 시작
             if (window.RetellWebWidget) {
-                window.RetellWebWidget.open();
+                // startCall() 또는 open() 중 위젯 설정에 맞는 함수 호출
+                try {
+                    window.RetellWebWidget.open(); 
+                } catch (e) {
+                    console.error("Failed to start call:", e);
+                }
             } else {
-                console.error("Retell Widget not loaded yet.");
-                alert("The AI is still loading. Please try again in 3 seconds.");
+                alert("AI Engine is still loading. Please wait 3 seconds and try again.");
             }
         });
+    </script>
+</body>
+</html>
